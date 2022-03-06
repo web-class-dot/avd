@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="form">
+    <input type="time" class="time-data"name="bus-time"/> <span class="time"></span><br/>
+    <select class="loc">
+        <option>Old Bus stand</option>
+        <option>New Bus stand</option>
+        <option>Madurai</option>
+        <option>Mattuthavani</option>
+        <option>Arappalayam</option>
+        <option>Usilampatti</option>
+        <option>Thodapanayakanur</option>
+        </select>
+
+       <button class="submit" onclick="send()">Send</button>
+    </div>
+    <script>
+        let timeElem  = document.querySelector(".time")
+        let timeElemdata = document.querySelector(".time-data")
+        let location1 = document.querySelector(".loc")
+        let time  = new Date()
+        timeElem.innerHTML=`${time.getHours()}:${time.getMinutes()}pm`
+       function send(){
+        let formdata = {time:timeElemdata.value,location:location1.value}
+        formdata = JSON.stringify(formdata)
+    
+        let dataSend = fetch("/server",{
+            method:"post",
+            headers:{"Content-type":"application/json"},
+            body:formdata
+        }).then((e)=>{
+            alert("sent sucessfully")
+        }).catch((e)=>{
+            alert("failed")
+        })
+    }
+    </script>
+
+</body>
+</html>
